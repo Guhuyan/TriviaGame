@@ -1,0 +1,24 @@
+.container-grid {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "header"
+    "main";
+}
+.header {
+    grid-area: header;
+}
+.main {
+    grid-area: main;
+}
+
+.grid {
+    display: grid;
+    grid-template: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "timer"
+    "question"
+    "options";
+}
