@@ -1,15 +1,30 @@
-
-
 .container-grid {
     display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 80px 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
     grid-template-areas: 
-    "header"
-    "main";
+    ". header ."
+    ". main .";
+    margin-top: 20px;
 }
 .header {
     grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.jQuery-logo {
+    margin-right: 1em;
+}
+h1 {
+    font-size: 36px;
+}
+h2 {
+    font-size: 28px;
+    padding-bottom: 12px;
+}
+h2 h3 h4 h5 h6 {
+    font-family: "klavika-web", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 .main {
     grid-area: main;
@@ -17,12 +32,15 @@
 
 .grid {
     display: grid;
-    grid-template: 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-    "timer"
     "question"
-    "options";
+    "answers"
+    "."
+    "timer";
+    margin-top: 2em;
+    text-align: start;
 }
 
 .timer {
@@ -31,6 +49,22 @@
 .question {
     grid-area: question;
 }
-.options {
-    grid-area: options;
+.question-counter {
+    vertical-align: super;
+    font-size: 16px;
+}
+.answers {
+    grid-area: answers;
+    font-size: 1.2em;
+    text-align: start;
+    padding-left: auto;
+    padding-right: auto;
+}
+.choices {
+    padding-bottom: 6px;
+}
+
+.btn {
+    margin-top: 6px;
+    height: 2em;
 }

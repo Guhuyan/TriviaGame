@@ -12,23 +12,28 @@
 </head>
 <body>
     <div class="container-grid">
-        <header class="header">
-            <h1>Trivia Game</h1>
+        <header class="header"> <!--Flex-->
+            <div class="jQuery-logo">
+                <img src="assets/images/jquery-vertical.svg" width="80" alt="jQuery logo">
+            </div>
+            <div>
+                <h1>Quiz Game</h1>
+            </div>
         </header>
         <main class="main">
             <div class="grid">
+                <div class="question">
+                    <h2 id="question"></h2>
+                </div>
+                <div class="answers">
+                    <form id="answers"></form>
+                </div>
                 <div class="timer">
                     Time left: <span id="timeLeft"></span>
-                </div>
-                <div class="question">
-                    <p><!--Question goes here--></p>
-                </div>
-                <div class="options">
-                    <p><!--Four words. Pick one.--></p>
+                    <div><button id="btn">Submit Answer</button></div>
                 </div>
             </div>
         </main>
     </div>
-    
 </body>
 </html>
