@@ -1,11 +1,13 @@
 // When the document is ready, run Javascript.
 $(document).ready(function() {
-    // Declare two variables to keep track of the right/wrong answers
     let rightAnswers = 0;
     let wrongAnswers = 0;
-    // Delare a variable to hold the question counter.
+    let timerRunning = false;
     let qCounter = 0;
     let currentCorrectAnswer;
+    // Global variables to track the timer
+    let intervalID;
+    let time = 90;
     // An object to hold all the questions & answers.
     const qaContainer = [
         {
@@ -112,21 +114,100 @@ $(document).ready(function() {
         }
     }
 
+    // Set up a decrement timer and render it to the document after passing it through the convertTime function
+    function decrementTimer() {
+        time--;
+        let convertedTime = convertTime(time);
+        $("#timeLeft").html(convertedTime);
+        // Lose if timer runs out
+        if (time === 0) {
+            alert("Time is up!")
+            wrongAnswers++;
+            qCounter++;
+            reset();
+        }
+    }
+
+    // Start the timer
+    function startTimer() {
+        intervalID = setInterval(decrementTimer, 1000);
+        timerRunning = true;
+    }
+
+    // Reset and render the Timer
+    function resetTimer() {
+        clearInterval(intervalID);
+        time = 90;
+        let convertedTime = convertTime(time);
+        $("#timeLeft").html(convertedTime);
+    }
+
+    // This function takes in a time in seconds and convert it to minutes and seconds
+    function convertTime(t) {
+        let minutes = Math.floor(t/60);
+        let seconds = t - (minutes * 60)
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        if (minutes === 0) {
+            minutes = "00";
+        }
+        else if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        return `${minutes}:${seconds}`;
+    }
+    
     // Reset the game
     function reset() {
+        if (qCounter === qaContainer.length) {
+            timerRunning = false;
+            resetTimer();
+            $(".question").empty();
+            $(".answers").empty();
+            $(".timer").empty();
+            $(".question").html(`<h2>Thank you for playing my quiz game!</h2>`);
+            $(".answers").html(`
+            <div>Number of correct answers: ${rightAnswers}</div>
+            <div>Number of wrong answers: ${wrongAnswers}</div>
+            `);
+            //$(".timer").html(`<div><button id="btn-restart">Play Again</button></div>`);
+        }
+        else {
+            resetTimer()
+            renderQuestion()
+            $("#answers").empty();
+            renderAnswers();
+            currentCorrectAnswer = qaContainer[qCounter].correct;
+            startTimer();
+            // Testing - console log out the correct answer.
+            console.log("Correct answer: " + currentCorrectAnswer);
+        }
+    }
+
+    // Start the game.  Populate cells.
+    function start() {
+        $(".question").empty();
+        $(".answers").empty();
+        $(".timer").empty();
+        $(".question").html(`<h2 id="question"></h2>`);
+        $(".answers").html(`<form id="answers"></form>`);
+        $(".timer").html(`
+        <div>Time left: <span id="timeLeft">00:00</span></div>
+        <div><button id="btn-submit">Submit Answer</button></div>
+        `)
+        resetTimer()
         renderQuestion()
         $("#answers").empty();
         renderAnswers();
         currentCorrectAnswer = qaContainer[qCounter].correct;
-        // Testing; console log out the correct answer.
-        console.log("Correct answer: " + currentCorrectAnswer)
+        startTimer();
+        // Testing - console log out the correct answer.
+        console.log("Correct answer: " + currentCorrectAnswer);
     }
+    start();
 
-    // Run the game
-    reset();
-
-
-    $("#btn").on("click", function() {
+    $("#btn-submit").on("click", function() {
         // Used vanilla js to select elements by name because I don't know how to use jQuery to select by name.
         let radios = document.getElementsByName("choice");
         let checkInput = false;
@@ -137,8 +218,6 @@ $(document).ready(function() {
             if (radios[i].checked) {
                 checkInput = true;
                 playerChoice = radios[i].value;
-                // Testing to see if the radio is working.  If it is, console log out the index of the radio.
-                console.log(i);
             }
         }
         // If the user hasn't picked an answer yet, alert the user to pick an answer.
