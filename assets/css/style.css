@@ -22,7 +22,7 @@ h1 {
 }
 h2 {
     font-size: 28px;
-    padding-bottom: 12px;
+    padding: 12px;
 }
 h2 h3 h4 h5 h6 {
     font-family: "klavika-web", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -33,7 +33,7 @@ h2 h3 h4 h5 h6 {
 
 .grid {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2em 1fr;
     grid-template-columns: 1fr;
     grid-template-areas: 
     "question"
@@ -49,6 +49,9 @@ h2 h3 h4 h5 h6 {
 }
 .question {
     grid-area: question;
+    align-self: center;
+    display: inline;
+    background-color: #E5E5E5;
 }
 .question-counter {
     vertical-align: super;
@@ -58,14 +61,16 @@ h2 h3 h4 h5 h6 {
     grid-area: answers;
     font-size: 1.2em;
     text-align: start;
+    padding: 12px;
     padding-left: auto;
     padding-right: auto;
+    border: 2px solid #E3E3E3;
 }
 .choices {
     padding-bottom: 6px;
 }
 
-#btn {
+#btn-submit {
     margin-top: 6px;
     height: 2em;
 }
